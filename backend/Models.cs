@@ -15,7 +15,7 @@ public static class Trust
     public const string Pan       = "AAKTM0976H";
     public const string Darpan    = "JH/2025/0649469";
     public const string Reg80G    = "";                 // set once 80G is granted
-    public const string President = "Shazia Raza Khan";
+    public const string President = "Shazia Raza Khan";  // CONFIRM against DARPAN (Anup Raj)
     public const string Treasurer = "Gurprasad Singh Sokhi";
 }
 

@@ -35,8 +35,12 @@ const TRUST = {
     treasurer: "Gurprasad Singh Sokhi",
 };
 
+/* Your transparent PNG logo. Place the file in the Static Web App repo at
+   public/logo.png  ->  it is served from the site root as /logo.png. */
+const LOGO_SRC = "/logo.png";
+
 /* deterministic colour per batch year (works for any year from the DB) */
-const PALETTE = ["#3b5a7a", "#6a5a8a", "#3f7a6a", "#8a5a4a", "#5a7a44", "#7a6a34", "#4a6a8a", "#8a6a5a"];
+const PALETTE = ["#3f5a72", "#5f6a86", "#6a5f78", "#7a6a56", "#4f6f6a", "#8a6a4c", "#48607a", "#736560"];
 const batchColor = (year) => PALETTE[Math.abs(Number(year) || 0) % PALETTE.length];
 
 /* ---------- API helper + field mapping ---------- */
@@ -89,11 +93,16 @@ function amountToWords(num) {
 }
 
 /* ---------- crest / seal / avatar ---------- */
-
-function Crest({ size = 64, color = "var(--navy)" }) {
-    return <img src="/logo.png" alt="MNPS Alumni Trust" width={size} height={size} style={{ objectFit: "contain", flexShrink: 0 }} />;
+function Crest({ size = 64, chip = false }) {
+    return (
+        <img
+            src={LOGO_SRC}
+            alt="MNPS Alumni Trust"
+            className={chip ? "crest chip" : "crest"}
+            style={{ width: size, height: size, objectFit: "contain", flexShrink: 0 }}
+        />
+    );
 }
-
 
 function Seal({ size = 88, id = "seal" }) {
     const r = size / 2, pr = r - 12;
@@ -103,7 +112,7 @@ function Seal({ size = 88, id = "seal" }) {
             <circle cx={r} cy={r} r={r - 2} fill="none" stroke="var(--brass)" strokeWidth="1.5" />
             <circle cx={r} cy={r} r={r - 7} fill="none" stroke="var(--brass)" strokeWidth="0.75" />
             <text fontSize={size * 0.085} letterSpacing="1.5" fill="var(--brass)" fontFamily="'IBM Plex Mono', monospace">
-                <textPath href={`#${id}`} startOffset="2%">MNPS ALUMNI TRUST · EST. 2025 · REGD. SOCIETY ·</textPath>
+                <textPath href={`#${id}`} startOffset="2%">MNPS ALUMNI TRUST · EST. 2015 · REGD. SOCIETY ·</textPath>
             </text>
             <text x={r} y={r - 3} textAnchor="middle" fontSize={size * 0.26} fill="var(--brass)" fontFamily="'Fraunces', serif" fontWeight="600">M</text>
             <text x={r} y={r + size * 0.17} textAnchor="middle" fontSize={size * 0.085} letterSpacing="2" fill="var(--brass)" fontFamily="'IBM Plex Mono', monospace">✦ ✦ ✦</text>
@@ -505,7 +514,7 @@ export default function App() {
 
             <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
                 <div className="brand">
-                    <Crest size={44} color="var(--brass)" />
+                    <Crest size={40} chip />
                     <div className="brand-txt"><strong>MNPS</strong><span>Alumni Trust</span><em>{TRUST.tagline}</em></div>
                 </div>
                 <nav>
@@ -693,9 +702,9 @@ function AddAlumniForm({ batches, onSubmit }) {
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 :root{
-  --ink:#152641; --ink-soft:#22375a; --navy:#23425e; --paper:#f4f0e6; --brass:#bb9648; --brass-2:#a37f34;
-  --stone:#e9e5db; --card:#ffffff; --line:#e4dfd2; --text:#1c2735; --muted:#6a7688;
-  --paid:#2f7d5b; --paid-bg:#e6f2ec; --unpaid:#9c6b1f; --unpaid-bg:#f6ecd8;
+  --ink:#2b4257; --ink-soft:#38536b; --navy:#38536b; --paper:#f2f4f6; --brass:#b9764c; --brass-2:#9c5f39;
+  --stone:#eceef1; --card:#ffffff; --line:#e3e6ea; --text:#2a3745; --muted:#6b7885;
+  --paid:#2f7d6b; --paid-bg:#e3f0ec; --unpaid:#9c5f39; --unpaid-bg:#f3e8dd;
 }
 *{box-sizing:border-box}
 .app{display:flex; min-height:100vh; background:var(--stone); color:var(--text); font-family:'Inter',system-ui,sans-serif; font-size:14px; line-height:1.5;}
@@ -710,6 +719,8 @@ button{font-family:inherit; cursor:pointer;}
 .brand-txt strong{font-family:'Fraunces',serif; color:#fff; font-size:19px; letter-spacing:.02em}
 .brand-txt span{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--brass)}
 .brand-txt em{font-style:italic; font-family:'Fraunces',serif; font-size:11px; color:#9fb0c9; margin-top:2px}
+.crest{display:block}
+.crest.chip{background:#fff; border-radius:11px; padding:5px; box-shadow:0 1px 4px rgba(0,0,0,.18)}
 nav{display:flex; flex-direction:column; gap:3px; flex:1}
 .nav{display:flex; align-items:center; gap:11px; padding:10px 12px; border:none; background:none; color:#aeb9cc; border-radius:9px; text-align:left; font-size:13.5px; font-weight:500; transition:.15s}
 .nav:hover{background:rgba(255,255,255,.06); color:#fff}

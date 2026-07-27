@@ -8,10 +8,23 @@ namespace MnpsAlumni.Api.Services;
 
 public sealed class PdfService
 {
-    private const string Navy  = "#23425E";
-    private const string Ink   = "#152641";
-    private const string Brass = "#A37F34";
-    private const string Muted = "#6A7688";
+    private const string Navy  = "#2B4257";
+    private const string Ink   = "#2A3745";
+    private const string Brass = "#A5643C";
+    private const string Muted = "#6B7885";
+
+    // Loads logo.png from the app folder if present (place it in the API
+    // project root; the .csproj copies it to output). Falls back to no image.
+    private static readonly byte[]? Logo = LoadLogo();
+    private static byte[]? LoadLogo()
+    {
+        try
+        {
+            var p = Path.Combine(AppContext.BaseDirectory, "logo.png");
+            return File.Exists(p) ? File.ReadAllBytes(p) : null;
+        }
+        catch { return null; }
+    }
 
     // Uses "Rs." rather than the rupee glyph: the default bundled font may not
     // include U+20B9 on the Linux host, which would render as a blank box.
@@ -34,6 +47,7 @@ public sealed class PdfService
                     inner.Border(1).BorderColor(Brass).Padding(30).Column(col =>
                     {
                         col.Spacing(6);
+                        if (Logo != null) col.Item().AlignCenter().Height(72).Image(Logo);
                         col.Item().AlignCenter().Text(Trust.Name).FontSize(24).Bold().FontColor(Navy);
                         col.Item().AlignCenter().Text($"{Trust.School} \u00b7 Jamshedpur").FontSize(9).FontColor(Brass);
                         col.Item().PaddingVertical(6).AlignCenter().Width(70).LineHorizontal(1.5f).LineColor(Brass);
@@ -88,11 +102,15 @@ public sealed class PdfService
                 {
                     col.Spacing(10);
 
-                    col.Item().BorderBottom(2).BorderColor(Brass).PaddingBottom(10).Column(h =>
+                    col.Item().BorderBottom(2).BorderColor(Brass).PaddingBottom(10).Row(head =>
                     {
-                        h.Item().Text(Trust.Name).FontSize(20).Bold().FontColor(Navy);
-                        h.Item().Text($"{Trust.School} \u00b7 {Trust.Address}").FontSize(9).FontColor(Muted);
-                        h.Item().PaddingTop(4).Text("DONATION RECEIPT").FontSize(10).FontColor(Brass);
+                        if (Logo != null) head.ConstantItem(54).Height(54).Image(Logo);
+                        head.RelativeItem().PaddingLeft(Logo != null ? 12 : 0).Column(h =>
+                        {
+                            h.Item().Text(Trust.Name).FontSize(20).Bold().FontColor(Navy);
+                            h.Item().Text($"{Trust.School} \u00b7 {Trust.Address}").FontSize(9).FontColor(Muted);
+                            h.Item().PaddingTop(4).Text("DONATION RECEIPT").FontSize(10).FontColor(Brass);
+                        });
                     });
 
                     col.Item().Row(r =>
@@ -129,7 +147,7 @@ public sealed class PdfService
                     });
 
                     var eightyG = string.IsNullOrWhiteSpace(Trust.Reg80G)
-                        ? $"{Trust.Name} does not hold 80G registration; this donation is not eligible for income-tax exemption under Section 80G. "
+                        ? ""
                         : $"Donations to {Trust.Name} are eligible for tax exemption under Section 80G of the Income Tax Act (80G Reg. no. {Trust.Reg80G}). ";
                     col.Item().Text(eightyG +
                         $"Regd. under the Indian Trusts Act, 1882 \u00b7 Reg. no. {Trust.RegNo} \u00b7 PAN {Trust.Pan}. " +
