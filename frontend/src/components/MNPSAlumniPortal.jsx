@@ -14,7 +14,7 @@ import {
 /*  App URL (or inject it at build time via an env var).               */
 /* ------------------------------------------------------------------ */
 
-const API_BASE = "https://func-mnpsalumni-01.azurewebsites.net/api";
+const API_BASE = "https://func-mnpsalumni-01-h9hjbza4fscbbuaw.eastasia-01.azurewebsites.net/api";
 
 const TRUST = {
     name: "MNPS Alumni Trust",
