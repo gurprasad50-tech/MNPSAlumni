@@ -1,4 +1,4 @@
-name: Deploy Static Web App
+name: Deploy React Frontend
 
 on:
   push:
@@ -9,20 +9,28 @@ on:
       - '.github/workflows/azure-static-web-apps.yml'
 
   pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+
+permissions:
+  contents: read
 
 jobs:
-  build_and_deploy_job:
+
+  build_and_deploy:
+
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
 
     runs-on: ubuntu-latest
 
     steps:
+
       - uses: actions/checkout@v4
 
-      - name: Build and Deploy Static Web App
+      - name: Build and Deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_MUSHROOM_071E78D00 }}
@@ -30,16 +38,20 @@ jobs:
 
           action: upload
 
-          app_location: "frontend"
-          api_location: ""
-          output_location: "dist"
+          app_location: frontend
 
-  close_pull_request_job:
+          api_location: ""
+
+          output_location: dist
+
+  close_pull_request:
+
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
 
     runs-on: ubuntu-latest
 
     steps:
+
       - uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_MUSHROOM_071E78D00 }}
