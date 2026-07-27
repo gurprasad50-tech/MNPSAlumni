@@ -1,3 +1,4 @@
+import "./App.css";
 import MNPSAlumniPortal from "./components/MNPSAlumniPortal";
 
 function App() {
