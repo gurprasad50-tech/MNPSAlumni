@@ -26,7 +26,7 @@ const TRUST = {
     email: "mnpsalumnitrust@gmail.com",
     website: "www.mnpsalumni.com",
     instagram: "@MNPSALUMNI",
-    estd: 2015,
+    estd: 2025,
     darpan: "JH/2025/0649469",
     regNo: "2025/JSR/1730/BK4/137",
     pan: "AAKTM0976H",
@@ -89,36 +89,11 @@ function amountToWords(num) {
 }
 
 /* ---------- crest / seal / avatar ---------- */
+
 function Crest({ size = 64, color = "var(--navy)" }) {
-    const cx = 50, R = 33;
-    const angs = [104, 80, 56, 32, 8, -16, -38];
-    const leaves = [];
-    angs.forEach((d, i) => {
-        const rad = (d * Math.PI) / 180;
-        const x = cx + R * Math.cos(rad);
-        const y = 55 + R * Math.sin(rad);
-        const rx = 6.2 - i * 0.5, ry = 2.5;
-        leaves.push({ x, y, rot: d - 90, rx, ry });
-        leaves.push({ x: 2 * cx - x, y, rot: -(d - 90), rx, ry });
-    });
-    return (
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ color, flexShrink: 0 }} aria-label="MNPS Alumni Trust crest">
-            <g fill="currentColor">{leaves.map((l, i) => <ellipse key={i} cx={l.x} cy={l.y} rx={l.rx} ry={l.ry} transform={`rotate(${l.rot} ${l.x} ${l.y})`} />)}</g>
-            <g fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M42,84 L50,88 M58,84 L50,88" /></g>
-            <polygon points="50,13 80,25 50,33 20,25" fill="currentColor" />
-            <path d="M35,29 L65,29 L60,41 Q50,46 40,41 Z" fill="currentColor" />
-            <circle cx="50" cy="23" r="2" fill="var(--paper, #f4f0e6)" />
-            <g fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M50,23 L74,26 L74,40" /></g>
-            <ellipse cx="74" cy="42" rx="2.2" ry="3.4" fill="currentColor" />
-            <path d="M50,50 C41,47 31,47 23,50 L23,70 C31,67 41,67 50,70 Z" fill="currentColor" />
-            <path d="M50,50 C59,47 69,47 77,50 L77,70 C69,67 59,67 50,70 Z" fill="currentColor" />
-            <g stroke="var(--paper, #f4f0e6)" strokeWidth="1" fill="none" opacity="0.85">
-                <path d="M28,55 C35,53 43,53 47,55" /><path d="M28,61 C35,59 43,59 47,61" />
-                <path d="M53,55 C57,53 65,53 72,55" /><path d="M53,61 C57,59 65,59 72,61" />
-            </g>
-        </svg>
-    );
+    return <img src="/logo.png" alt="MNPS Alumni Trust" width={size} height={size} style={{ objectFit: "contain", flexShrink: 0 }} />;
 }
+
 
 function Seal({ size = 88, id = "seal" }) {
     const r = size / 2, pr = r - 12;
@@ -128,7 +103,7 @@ function Seal({ size = 88, id = "seal" }) {
             <circle cx={r} cy={r} r={r - 2} fill="none" stroke="var(--brass)" strokeWidth="1.5" />
             <circle cx={r} cy={r} r={r - 7} fill="none" stroke="var(--brass)" strokeWidth="0.75" />
             <text fontSize={size * 0.085} letterSpacing="1.5" fill="var(--brass)" fontFamily="'IBM Plex Mono', monospace">
-                <textPath href={`#${id}`} startOffset="2%">MNPS ALUMNI TRUST · EST. 2015 · REGD. SOCIETY ·</textPath>
+                <textPath href={`#${id}`} startOffset="2%">MNPS ALUMNI TRUST · EST. 2025 · REGD. SOCIETY ·</textPath>
             </text>
             <text x={r} y={r - 3} textAnchor="middle" fontSize={size * 0.26} fill="var(--brass)" fontFamily="'Fraunces', serif" fontWeight="600">M</text>
             <text x={r} y={r + size * 0.17} textAnchor="middle" fontSize={size * 0.085} letterSpacing="2" fill="var(--brass)" fontFamily="'IBM Plex Mono', monospace">✦ ✦ ✦</text>
