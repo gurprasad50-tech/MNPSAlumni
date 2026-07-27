@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+
+    "SqlConnectionString": "Server=tcp:sql-mnpsalumni-01.database.windows.net,1433;Initial Catalog=sqldb-mnps-digitalplatform;User ID=MNPSADMIN;Password=<PUT-LOCAL-ONLY>;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+    "StorageConnectionString": "<storage-account-connection-string-LOCAL-ONLY>",
+    "AcsConnectionString": "<azure-communication-services-connection-string-LOCAL-ONLY>",
+    "SenderAddress": "DoNotReply@<your-subdomain>.azurecomm.net",
+    "DocumentsContainer": "documents"
+  },
+  "Host": {
+    "CORS": "*"
+  }
+}
